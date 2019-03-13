@@ -8,10 +8,7 @@ public class Piece {
   int yPosition;
   ArrayList<String> possibleLocations = new ArrayList<String>();;
   int colour;
-  public void addToPossibleLocations(int x,int y) {
-	  if(x>7 || y>7 || x<0 || y<0 ) return;
-	  possibleLocations.add(x+""+y);
-  }
+  
   public String toString() {
 	  return xPosition + " " + yPosition + " " + colour + "   " +possibleLocations;
   }

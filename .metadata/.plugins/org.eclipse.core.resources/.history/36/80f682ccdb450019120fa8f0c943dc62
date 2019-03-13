@@ -9,8 +9,8 @@ public class Piece {
   ArrayList<String> possibleLocations = new ArrayList<String>();;
   int colour;
   public void addToPossibleLocations(int x,int y) {
-	  if(x>7 || y>7 || x<0 || y<0 ) return;
-	  possibleLocations.add(x+""+y);
+	  if(x>8 || y>8 || x<0 || y<0 ) return;
+	  possibleLocations.add((x)+""+(y+2));
   }
   public String toString() {
 	  return xPosition + " " + yPosition + " " + colour + "   " +possibleLocations;

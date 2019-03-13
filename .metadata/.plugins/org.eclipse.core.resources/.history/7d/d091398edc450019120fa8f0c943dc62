@@ -10,9 +10,9 @@ public class Pawn extends Piece{
 		calcPossibleMoves();
 	}
     void calcPossibleMoves() {
-    	 this.addToPossibleLocations(xPosition,(yPosition+(1*colour)));
+    	this.possibleLocations.add(xPosition+""+(yPosition+(1*colour)));
     	if(unmoved) {
-    		 this.addToPossibleLocations(xPosition,(yPosition+(2*colour)));
+    	this.possibleLocations.add(xPosition+""+(yPosition+(2*colour)));
     	}
     }
 	public String toString() {
