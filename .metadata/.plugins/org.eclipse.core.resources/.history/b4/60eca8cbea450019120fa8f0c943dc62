@@ -20,6 +20,6 @@ public class Piece {
 	  return xPosition;
   }
   public int getY() {
-	  return yPosition;
+	  return xPosition;
   }
 }

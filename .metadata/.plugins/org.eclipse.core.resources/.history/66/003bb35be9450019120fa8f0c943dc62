@@ -8,8 +8,7 @@ public class Pawn extends Piece{
 		this.yPosition=startY;
 		this.colour=colour;
 	}
-	@Override
-    public void possibleMoves() {
+    void calcPossibleMoves() {
     	 this.addToPossibleLocations(xPosition,(yPosition+(1*colour)));
     	if(unmoved) {
     		 this.addToPossibleLocations(xPosition,(yPosition+(2*colour)));
