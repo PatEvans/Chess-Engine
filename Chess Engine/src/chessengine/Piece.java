@@ -1,15 +1,16 @@
 package chessengine;
-
+import java.util.ArrayList;
 public class Piece {
   //these are represented as cartesian coords
   // in which x and y are represented 
   // are 0-7
   int xPosition;
   int yPosition;
-  boolean colour;
+  ArrayList<String> possibleLocations = new ArrayList<String>();;
+  int colour;
   
   public String toString() {
-	  return xPosition + " " + yPosition + " " + colour;
+	  return xPosition + " " + yPosition + " " + colour + "   " +possibleLocations;
   }
   
 }

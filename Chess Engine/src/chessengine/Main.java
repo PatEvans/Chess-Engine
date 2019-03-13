@@ -3,11 +3,11 @@ package chessengine;
 public class Main {
 	
   static Piece[] pieces;
-  static void initialisePieces(boolean whiteToMove) {
+  static void initialisePieces(int whiteToMove) {
 	  pieces = new Piece[32];
 	  //add player's pieces, then computer's
 	  
-	  boolean colour=whiteToMove;
+	  int colour=whiteToMove;
 	  for(int i=0;i<8;i++) {
 		  pieces[i]= (Piece) new Pawn(i,1,colour);
 	  }
@@ -20,7 +20,7 @@ public class Main {
 	  pieces[14]= (Piece) new Queen(3,0,colour);
 	  pieces[15]= (Piece) new King(4,0,colour);
 	  
-	  colour =!colour;
+	  colour =-colour;
 	  
 	  for(int i=16;i<24;i++) {
 		  pieces[i]= (Piece) new Pawn(i-16,7,colour);
@@ -42,7 +42,8 @@ public class Main {
   }
   
   public static void main(String[] args) {
-	  initialisePieces(true);
+	  //1 corresponds to white, -1 to black
+	  initialisePieces(1);
 	  printPieces();
   }
 }

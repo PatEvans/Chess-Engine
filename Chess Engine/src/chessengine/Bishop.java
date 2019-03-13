@@ -2,7 +2,7 @@ package chessengine;
 
 public class Bishop extends Piece{
 
-	public Bishop(int startX,int startY,boolean colour){
+	public Bishop(int startX,int startY,int colour){
 		this.xPosition=startX;
 		this.yPosition=startY;
 		this.colour=colour;
