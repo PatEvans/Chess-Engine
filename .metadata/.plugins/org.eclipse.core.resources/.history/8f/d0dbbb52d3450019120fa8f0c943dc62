@@ -1,0 +1,30 @@
+package chessengine;
+
+public class Main {
+	
+  Piece[] pieces;
+  void initialisePieces(boolean whiteToMove) {
+	  pieces = new Piece[32];
+	  //add white pieces to data structure,
+	  //then black pieces. White - true
+	  //black - false
+	  
+	  boolean colour=whiteToMove;
+	  for(int i=0;i<8;i++) {
+		  pieces[i]= (Piece) new Pawn(i,1,colour);
+	  }
+	  pieces[8]= (Piece) new Rook(0,0,colour);
+	  pieces[9]= (Piece) new Rook(7,0,colour);
+	  pieces[10]= (Piece) new Knight(1,0,colour);
+	  pieces[11]= (Piece) new Knight(6,0,colour);
+	  pieces[12]= (Piece) new Bishop(2,0,colour);
+	  pieces[13]= (Piece) new Bishop(5,0,colour);
+	  pieces[14]= (Piece) new Queen(3,0,colour);
+	  pieces[15]= (Piece) new King(4,0,colour);
+	  
+  }
+  
+  public static void main(String[] args) {
+	  
+  }
+}

@@ -1,0 +1,12 @@
+package chessengine;
+
+public class Rook extends Piece{
+
+	public Rook(int startX,int startY,boolean colour){
+		this.xPosition=startX;
+		this.yPosition=startY;
+	}
+	public String toString() {
+		return "Rook";
+	}
+}

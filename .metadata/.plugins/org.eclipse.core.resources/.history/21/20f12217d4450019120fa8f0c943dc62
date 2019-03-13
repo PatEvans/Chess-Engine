@@ -1,0 +1,8 @@
+package chessengine;
+
+public class King extends Piece{
+
+	public King(int startX,int startY,boolean colour){
+		
+	}
+}

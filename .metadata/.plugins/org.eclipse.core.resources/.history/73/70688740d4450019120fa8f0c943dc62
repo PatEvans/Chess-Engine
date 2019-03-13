@@ -1,0 +1,12 @@
+package chessengine;
+
+public class Knight extends Piece{
+
+	public Knight(int startX,int startY,boolean colour){
+		this.xPosition=startX;
+		this.yPosition=startY;
+	}
+	public String toString() {
+		return "Knight";
+	}
+}

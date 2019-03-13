@@ -1,0 +1,7 @@
+package chessengine;
+
+public class Piece {
+  int xPosition;
+  int yPosition;
+  
+}

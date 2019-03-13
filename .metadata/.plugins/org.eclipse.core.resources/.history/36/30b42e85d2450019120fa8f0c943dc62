@@ -1,0 +1,22 @@
+package chessengine;
+
+public class Main {
+	
+  Piece[] pieces;
+  void initialisePieces(boolean blackToMove) {
+	  pieces = new Piece[32];
+	  //add white pieces to data structure,
+	  //then black pieces. White - true
+	  //black - false
+	  
+	  boolean colour=blackToMove;
+	  for(int i=0;i<8;i++) {
+		  pieces[i]= (Piece) new Pawn(i,1,colour);
+	  }
+	   
+  }
+  
+  public static void main(String[] args) {
+	  
+  }
+}

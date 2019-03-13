@@ -1,0 +1,13 @@
+package chessengine;
+
+public class Main {
+  void initialisePieces() {
+	  Piece[] whitePieces = new Piece[16];
+	  Piece[] blackPieces = new Piece[16];
+	  
+	  for(int i=0;i<8;i++) {
+		  whitePieces[i]= new Pawn(i,1);
+		  blackPieces[i]= new Pawn(i,1);
+	  }
+  }
+}

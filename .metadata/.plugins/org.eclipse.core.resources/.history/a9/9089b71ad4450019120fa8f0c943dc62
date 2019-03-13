@@ -1,0 +1,11 @@
+package chessengine;
+
+public class Queen extends Piece{
+
+	public Queen(int startX,int startY,boolean colour){
+		
+	}
+	public String toString() {
+		return "Queen";
+	}
+}
