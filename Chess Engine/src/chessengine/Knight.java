@@ -2,9 +2,10 @@ package chessengine;
 
 public class Knight extends Piece{
 
-	public Knight(int startX,int startY,int colour){
+	public Knight(int startX,int startY,int side,boolean colour){
 		this.xPosition=startX;
 		this.yPosition=startY;
+		this.side=side;
 		this.colour=colour;
 	}
 	@Override

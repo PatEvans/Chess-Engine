@@ -2,9 +2,10 @@ package chessengine;
 
 public class Queen extends Piece{
 
-	public Queen(int startX,int startY,int colour){
+	public Queen(int startX,int startY,int side,boolean colour){
 		this.xPosition=startX;
 		this.yPosition=startY;
+		this.side=side;
 		this.colour=colour;
 	}
 	@Override
@@ -29,7 +30,9 @@ public class Queen extends Piece{
 		for(int i=xPosition;i>=0;i--) {
 			if(Main.occupied(i,yPosition)) break;
 	    	this.addToPossibleLocations(i,yPosition);
-		}//These are the y=x possible moves
+		}
+		
+		//These are the y=x possible moves
 		for(int i=yPosition;i<8;i++) {
 			if(Main.occupied(xPosition+i,yPosition+i)) break;
 			this.addToPossibleLocations(xPosition+i,yPosition+i);

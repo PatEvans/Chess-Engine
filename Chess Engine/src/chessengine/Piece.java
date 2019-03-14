@@ -7,14 +7,15 @@ public class Piece {
   int xPosition;
   int yPosition;
   ArrayList<String> possibleLocations = new ArrayList<String>();;
-  int colour;
+  int side;
+  boolean colour;
   void possibleMoves() {}
   public void addToPossibleLocations(int x,int y) {
 	  if(x>7 || y>7 || x<0 || y<0 || Main.occupied(x,y)) return;
 	  possibleLocations.add(x+""+y);
   }
   public String toString() {
-	  return xPosition + " " + yPosition + " " + colour + "   " +possibleLocations;
+	  return xPosition + " " + yPosition + " " + side + " "+colour+"   " +possibleLocations;
   }
   public int getX() {
 	  return xPosition;
