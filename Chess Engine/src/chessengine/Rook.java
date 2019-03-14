@@ -15,7 +15,7 @@ public class Rook extends Piece{
 			if(Main.occupied(xPosition,i)) break;
 			this.addToPossibleLocations(xPosition,i);
 		}
-		for(int i=yPosition;i<8;i--) {
+		for(int i=yPosition;i>=0;i--) {
 			if(Main.occupied(xPosition,i)) break;
 			this.addToPossibleLocations(xPosition,i);
 		}
@@ -25,7 +25,7 @@ public class Rook extends Piece{
 			if(Main.occupied(i,yPosition)) break;
 	    	this.addToPossibleLocations(i,yPosition);
 		}
-		for(int i=xPosition;i<8;i--) {
+		for(int i=xPosition;i>=0;i--) {
 			if(Main.occupied(i,yPosition)) break;
 	    	this.addToPossibleLocations(i,yPosition);
 		}
