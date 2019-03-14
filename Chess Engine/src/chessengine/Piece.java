@@ -6,7 +6,7 @@ public class Piece {
   // are 0-7
   int xPosition;
   int yPosition;
-  ArrayList<String> possibleLocations = new ArrayList<String>();;
+  ArrayList<String> possibleLocations = new ArrayList<String>();
   int side;
   boolean colour;
   void possibleMoves() {}
