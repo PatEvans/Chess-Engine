@@ -7,6 +7,18 @@ public class King extends Piece{
 		this.yPosition=startY;
 		this.colour=colour;
 	}
+	@Override
+    public void possibleMoves() {
+    	 this.addToPossibleLocations(xPosition,yPosition+1);
+    	 this.addToPossibleLocations(xPosition,yPosition-1);
+    	 this.addToPossibleLocations(xPosition-1,yPosition);
+    	 this.addToPossibleLocations(xPosition+1,yPosition);
+    	
+    	 this.addToPossibleLocations(xPosition+1,yPosition+1);
+    	 this.addToPossibleLocations(xPosition-1,yPosition-1);
+    	 this.addToPossibleLocations(xPosition+1,yPosition-1);
+    	 this.addToPossibleLocations(xPosition-1,yPosition+1);
+    }
 	public String toString() {
 		return "King " + super.toString();
 	}
