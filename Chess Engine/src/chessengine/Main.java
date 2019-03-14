@@ -18,7 +18,6 @@ public class Main {
 	  pieces = new ArrayList<Piece>();;
 	  //add player's pieces, then computer's
 	  int side =1;
-	  System.out.println(whiteToMove);
 	  for(int i=0;i<8;i++) {
 		  pieces.add((Piece) new Pawn(i,1,side,whiteToMove));
 	  }
@@ -59,13 +58,13 @@ public class Main {
 		  System.out.println(pieces.get(i));
 	  }
   }
-  static boolean occupied(int x,int y) {
+  static Piece occupied(int x,int y) {
 	  for(int i=0;i<32;i++) {
 		  if(pieces.get(i).getX()==x && pieces.get(i).getY()==y) {
-			  return true;
+			  return pieces.get(i);
 		  }
 	  }
-	  return false;
+	  return null;
   }
  
 }

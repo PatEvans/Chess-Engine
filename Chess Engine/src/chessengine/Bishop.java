@@ -13,21 +13,21 @@ public class Bishop extends Piece{
 		
 		//These are the y=x possible moves
 		for(int i=0;i<8;i++) {
-			if(Main.occupied(xPosition+i,yPosition+i)) { break;}
+			if(Main.occupied(xPosition+i,yPosition+i)!=null) { break;}
 			this.addToPossibleLocations(xPosition+i,yPosition+i);
 		}
 		for(int i=0;i<8;i--) {
-			if(Main.occupied(xPosition-i,yPosition-i)) {break;}
+			if(Main.occupied(xPosition-i,yPosition-i)!=null) {break;}
 			this.addToPossibleLocations(xPosition-i,yPosition-i);
 		}
 		
 		//These are the y=-x possible moves
 		for(int i=0;i<8;i++) {
-			if(Main.occupied(xPosition+i,yPosition-i)) {break;}
+			if(Main.occupied(xPosition+i,yPosition-i)!=null) {break;}
 	    	this.addToPossibleLocations(xPosition+i,yPosition-i);
 		}
 		for(int i=0;i<8;i++) {
-			if(Main.occupied(xPosition-i,yPosition+i)) {break;}
+			if(Main.occupied(xPosition-i,yPosition+i)!=null) {break;}
 	    	this.addToPossibleLocations(xPosition-i,yPosition+i);
 		}
 		 	

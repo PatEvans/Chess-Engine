@@ -14,41 +14,41 @@ public class Queen extends Piece{
 		
 		//These are the up down possible moves
 		for(int i=yPosition;i<8;i++) {
-			if(Main.occupied(xPosition,i)) break;
+			if(Main.occupied(xPosition,i)!=null) break;
 			this.addToPossibleLocations(xPosition,i);
 		}
 		for(int i=yPosition;i>=0;i--) {
-			if(Main.occupied(xPosition,i)) break;
+			if(Main.occupied(xPosition,i)!=null) break;
 			this.addToPossibleLocations(xPosition,i);
 		}
 		
 		//These are the left right possible moves
 		for(int i=xPosition;i<8;i++) {
-			if(Main.occupied(i,yPosition)) break;
+			if(Main.occupied(i,yPosition)!=null) break;
 	    	this.addToPossibleLocations(i,yPosition);
 		}
 		for(int i=xPosition;i>=0;i--) {
-			if(Main.occupied(i,yPosition)) break;
+			if(Main.occupied(i,yPosition)!=null) break;
 	    	this.addToPossibleLocations(i,yPosition);
 		}
 		
 		//These are the y=x possible moves
 		for(int i=0;i<8;i++) {
-			if(Main.occupied(xPosition+i,yPosition+i)) { break;}
+			if(Main.occupied(xPosition+i,yPosition+i)!=null) { break;}
 			this.addToPossibleLocations(xPosition+i,yPosition+i);
 		}
 		for(int i=0;i<8;i--) {
-			if(Main.occupied(xPosition-i,yPosition-i)) {break;}
+			if(Main.occupied(xPosition-i,yPosition-i)!=null) {break;}
 			this.addToPossibleLocations(xPosition-i,yPosition-i);
 		}
 				
 		//These are the y=-x possible moves
 		for(int i=0;i<8;i++) {
-			if(Main.occupied(xPosition+i,yPosition-i)) {break;}
+			if(Main.occupied(xPosition+i,yPosition-i)!=null) {break;}
 			    this.addToPossibleLocations(xPosition+i,yPosition-i);
 		}
 		for(int i=0;i<8;i++) {
-			if(Main.occupied(xPosition-i,yPosition+i)) {break;}
+			if(Main.occupied(xPosition-i,yPosition+i)!=null) {break;}
 			this.addToPossibleLocations(xPosition-i,yPosition+i);
 		}
 		 	
