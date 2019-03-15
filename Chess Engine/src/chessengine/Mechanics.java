@@ -100,4 +100,9 @@ public class Mechanics {
 		  }
 		  return null;
 	  }
+
+	public static void makeMove() {
+		// TODO Auto-generated method stub
+		
+	}
 }
