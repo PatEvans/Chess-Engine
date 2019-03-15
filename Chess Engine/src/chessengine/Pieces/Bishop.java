@@ -55,4 +55,7 @@ public class Bishop extends Piece{
 	public String toString() {
 		return "Bishop " + super.toString();
 	}
+	public String getName() {
+		  return"Bishop";
+	}
 }

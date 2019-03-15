@@ -12,7 +12,10 @@ import chessengine.Pieces.Rook;
 
 public class Mechanics {
 	static ArrayList<Piece> pieces;
+	static boolean isWhiteToMove;
+	
 	static void initialisePieces(boolean whiteToMove) {
+		  isWhiteToMove = whiteToMove;
 		  pieces = new ArrayList<Piece>();;
 		  //add player's pieces, then computer's
 		  int side =1;
@@ -57,9 +60,42 @@ public class Mechanics {
 		  }
 	  }
 	  public static Piece occupied(int x,int y) {
-		  for(int i=0;i<32;i++) {
+		  for(int i=0;i<pieces.size();i++) {
 			  if(pieces.get(i).getX()==x && pieces.get(i).getY()==y) {
 				  return pieces.get(i);
+			  }
+		  }
+		  return null;
+	  }
+	  
+	  public Integer checkCheck() {
+		  //if no check, return null,
+		  //if a check produced on the opponent and not on the current player's team
+		  //return 1
+		  //Otherwise, if a check produced on the current player's team, return 2
+		  String myKingLocation=getKing(isWhiteToMove);
+		  String theirKingLocation=getKing(!isWhiteToMove);
+		  
+		  
+		  ArrayList<String> piecePossibleLocations;
+		  for(int i=0;i<pieces.size();i++) {
+			  piecePossibleLocations=pieces.get(i).getPossibleLocations();
+			  for(int j=0;i<piecePossibleLocations.size();i++) {
+				  if(piecePossibleLocations.get(j).equals("x"+myKingLocation)) {
+					  return 2;
+				  }
+				  if(piecePossibleLocations.get(j).equals("x"+theirKingLocation)) {
+					  return 1;
+				  }
+				  
+			  }
+		  }
+		  return null;
+	  }
+	  String getKing(boolean colour) {
+		  for(int i=0;i<pieces.size();i++) {
+			  if(pieces.get(i).getColour()==colour && pieces.get(i).getName().equals("King")) {
+				  return  pieces.get(i).getX()+""+pieces.get(i).getY();
 			  }
 		  }
 		  return null;

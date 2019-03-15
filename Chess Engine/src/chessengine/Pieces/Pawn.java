@@ -32,4 +32,7 @@ public class Pawn extends Piece{
 	public String toString() {
 		return "Pawn " + super.toString();
 	}
+	 public String getName() {
+		  return"Pawn";
+	  }
 }

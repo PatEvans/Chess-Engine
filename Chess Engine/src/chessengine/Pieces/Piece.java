@@ -29,6 +29,15 @@ public class Piece {
   public String toString() {
 	  return xPosition + " " + yPosition + " " + side + " "+colour+"   " +possibleLocations;
   }
+  public ArrayList<String> getPossibleLocations(){
+	  return possibleLocations;
+  }
+  public boolean getColour() {
+	  return colour;
+  }
+  public String getName() {
+	  return"piece";
+  }
   public int getX() {
 	  return xPosition;
   }

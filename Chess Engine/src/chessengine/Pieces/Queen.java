@@ -99,4 +99,7 @@ public class Queen extends Piece{
 	public String toString() {
 		return "Queen " + super.toString();
 	}
+	public String getName() {
+		return"Queen";
+	}
 }

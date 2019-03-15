@@ -23,4 +23,7 @@ public class King extends Piece{
 	public String toString() {
 		return "King " + super.toString();
 	}
+	 public String getName() {
+		  return"King";
+	  }
 }

@@ -55,4 +55,7 @@ public class Rook extends Piece{
 	public String toString() {
 		return "Rook " + super.toString();
 	}
+	 public String getName() {
+		  return"Rook";
+	  }
 }
