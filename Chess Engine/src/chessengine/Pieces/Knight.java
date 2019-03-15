@@ -1,4 +1,6 @@
-package chessengine;
+package chessengine.Pieces;
+
+import chessengine.*;
 
 public class Knight extends Piece{
 
@@ -9,7 +11,7 @@ public class Knight extends Piece{
 		this.colour=colour;
 	}
 	@Override
-	 void possibleMoves() {
+	public void possibleMoves() {
 	    for(int i=-1;i<=1;i=i+2) {
 	    	for(int j=-1;j<=1;j=j+2) {
 	    		
@@ -18,13 +20,13 @@ public class Knight extends Piece{
 	    		this.addToPossibleLocations((xPosition+(1*i)), (yPosition+(2*j)));
 	    		
 	    		//add to takes
-	    		if(Main.occupied((xPosition+(2*i)), (yPosition+(1*j)))!=null && 
-		    			Main.occupied((xPosition+(2*i)), (yPosition+(1*j))).colour!=this.colour) {
+	    		if(Mechanics.occupied((xPosition+(2*i)), (yPosition+(1*j)))!=null && 
+	    				Mechanics.occupied((xPosition+(2*i)), (yPosition+(1*j))).colour!=this.colour) {
 		    		this.addToPossibleTakes((xPosition+(2*i)), (yPosition+(1*j)));
 		    	}
 	    		
-	    		if(Main.occupied((xPosition+(1*i)), (yPosition+(2*j)))!=null && 
-		    			Main.occupied((xPosition+(1*i)), (yPosition+(2*j))).colour!=this.colour) {
+	    		if(Mechanics.occupied((xPosition+(1*i)), (yPosition+(2*j)))!=null && 
+	    				Mechanics.occupied((xPosition+(1*i)), (yPosition+(2*j))).colour!=this.colour) {
 		    		this.addToPossibleTakes((xPosition+(1*i)), (yPosition+(2*j)));
 		    	}
 	    	}

@@ -1,4 +1,4 @@
-package chessengine;
+package chessengine.Pieces;
 
 public class King extends Piece{
 
