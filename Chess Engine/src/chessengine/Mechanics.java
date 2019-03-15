@@ -80,7 +80,7 @@ public class Mechanics {
 		  ArrayList<String> piecePossibleLocations;
 		  for(int i=0;i<pieces.size();i++) {
 			  piecePossibleLocations=pieces.get(i).getPossibleLocations();
-			  for(int j=0;i<piecePossibleLocations.size();i++) {
+			  for(int j=0;j<piecePossibleLocations.size();j++) {
 				  if(piecePossibleLocations.get(j).equals("x"+myKingLocation)) {
 					  return 2;
 				  }
