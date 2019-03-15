@@ -10,11 +10,13 @@ public class Main {
 	  Mechanics.initialisePieces(true);
 	  Mechanics.calculatePossibleMoves();
 	  Mechanics.printPieces();
-	  String move;
+	  
 	  while(true) {
 		  System.out.println("Enter moves in form xy ('x')xy");
-		  move= input.nextLine();
-		  Mechanics.makeMove();
+		  String move= input.nextLine();
+		  String startPos = move.substring(0,2);
+		  String endPos = move.substring(3);
+		  Mechanics.makeMove(startPos,endPos);
 	  }
   }
   

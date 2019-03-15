@@ -101,8 +101,16 @@ public class Mechanics {
 		  return null;
 	  }
 
-	public static void makeMove() {
-		// TODO Auto-generated method stub
+	public static boolean makeMove(String startPos,String endPos) {
+		Integer startX = Integer.parseInt(startPos.substring(0,1));
+		Integer startY = Integer.parseInt(startPos.substring(1));
+		for(int i=0;i<pieces.size();i++) {
+			 if(pieces.get(i).getX()==startX && pieces.get(i).getY()==startY) {
+				  System.out.println(pieces.get(i));
+				  break;
+			  }
+		}
 		
+		return true;
 	}
 }
