@@ -12,9 +12,9 @@ public class Bishop extends Piece{
 	}
 	@Override
     public void possibleMoves() {
-		
+		possibleLocations.clear();
 		//These are the y=x possible moves
-		for(int i=0;i<8;i++) {
+		for(int i=1;i<8;i++) {
 			//add takes first, then check for obstruction
 			if(Mechanics.occupied(xPosition+i,yPosition+i)!=null && 
 					Mechanics.occupied(xPosition+i,yPosition+i).colour!=this.colour) {
@@ -24,7 +24,7 @@ public class Bishop extends Piece{
 			if(Mechanics.occupied(xPosition+i,yPosition+i)!=null) { break;}
 			this.addToPossibleLocations(xPosition+i,yPosition+i);
 		}
-		for(int i=0;i<8;i--) {
+		for(int i=1;i<8;i--) {
 			if(Mechanics.occupied(xPosition-i,yPosition-i)!=null && 
 					Mechanics.occupied(xPosition-i,yPosition-i).colour!=this.colour) {
 	    		this.addToPossibleTakes(xPosition-i,yPosition-i);
@@ -34,7 +34,7 @@ public class Bishop extends Piece{
 		}
 		
 		//These are the y=-x possible moves
-		for(int i=0;i<8;i++) {
+		for(int i=1;i<8;i++) {
 			if(Mechanics.occupied(xPosition+i,yPosition-i)!=null && 
 					Mechanics.occupied(xPosition+i,yPosition-i).colour!=this.colour) {
 	    		this.addToPossibleTakes(xPosition+i,yPosition-i);
@@ -42,7 +42,7 @@ public class Bishop extends Piece{
 			if(Mechanics.occupied(xPosition+i,yPosition-i)!=null) {break;}
 	    	this.addToPossibleLocations(xPosition+i,yPosition-i);
 		}
-		for(int i=0;i<8;i++) {
+		for(int i=1;i<8;i++) {
 			if(Mechanics.occupied(xPosition-i,yPosition+i)!=null && 
 					Mechanics.occupied(xPosition-i,yPosition+i).colour!=this.colour) {
 	    		this.addToPossibleTakes(xPosition+i,yPosition-i);

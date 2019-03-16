@@ -17,6 +17,8 @@ public class Main {
 		  String startPos = move.substring(0,2);
 		  String endPos = move.substring(3);
 		  System.out.println(Mechanics.makeMove(startPos,endPos));
+		  Mechanics.calculatePossibleMoves();
+		  Mechanics.printPieces();
 	  }
   }
   

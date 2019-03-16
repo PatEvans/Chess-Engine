@@ -13,9 +13,9 @@ public class Queen extends Piece{
 	@Override
     public void possibleMoves() {
 		//Has a combination of the Rook's moves and the bishop's
-		
+		possibleLocations.clear();
 		//These are the up down possible moves
-		for(int i=yPosition;i<8;i++) {
+		for(int i=yPosition+1;i<8;i++) {
 			//add takes first, then check for obstruction
 			if(Mechanics.occupied(xPosition,i)!=null && 
 					Mechanics.occupied(xPosition,i).colour!=this.colour) {
@@ -25,7 +25,7 @@ public class Queen extends Piece{
 			
 			this.addToPossibleLocations(xPosition,i);
 		}
-		for(int i=yPosition;i>=0;i--) {
+		for(int i=yPosition-1;i>=0;i--) {
 			if(Mechanics.occupied(xPosition,i)!=null && 
 					Mechanics.occupied(xPosition,i).colour!=this.colour) {
 	    		this.addToPossibleTakes(xPosition,i);
@@ -36,7 +36,7 @@ public class Queen extends Piece{
 		}
 		
 		//These are the left right possible moves
-		for(int i=xPosition;i<8;i++) {
+		for(int i=xPosition+1;i<8;i++) {
 			if(Mechanics.occupied(i,yPosition)!=null && 
 					Mechanics.occupied(i,yPosition).colour!=this.colour) {
 	    		this.addToPossibleTakes(i,yPosition);
@@ -45,7 +45,7 @@ public class Queen extends Piece{
 			
 	    	this.addToPossibleLocations(i,yPosition);
 		}
-		for(int i=xPosition;i>=0;i--) {
+		for(int i=xPosition-1;i>=0;i--) {
 			if(Mechanics.occupied(i,yPosition)!=null && 
 					Mechanics.occupied(i,yPosition).colour!=this.colour) {
 	    		this.addToPossibleTakes(i,yPosition);
@@ -56,7 +56,7 @@ public class Queen extends Piece{
 		}
 		
 		//These are the y=x possible moves
-		for(int i=0;i<8;i++) {
+		for(int i=1;i<8;i++) {
 			if(Mechanics.occupied(xPosition+i,yPosition+i)!=null && 
 					Mechanics.occupied(xPosition+i,yPosition+i).colour!=this.colour) {
 	    		this.addToPossibleTakes(xPosition+i,yPosition+i);
@@ -65,7 +65,7 @@ public class Queen extends Piece{
 			
 			this.addToPossibleLocations(xPosition+i,yPosition+i);
 		}
-		for(int i=0;i<8;i--) {
+		for(int i=1;i<8;i--) {
 			if(Mechanics.occupied(xPosition-i,yPosition-i)!=null && 
 					Mechanics.occupied(xPosition-i,yPosition-i).colour!=this.colour) {
 	    		this.addToPossibleTakes(xPosition-i,yPosition-i);
@@ -76,7 +76,7 @@ public class Queen extends Piece{
 		}
 				
 		//These are the y=-x possible moves
-		for(int i=0;i<8;i++) {
+		for(int i=1;i<8;i++) {
 			if(Mechanics.occupied(xPosition+i,yPosition-i)!=null && 
 					Mechanics.occupied(xPosition+i,yPosition-i).colour!=this.colour) {
 	    		this.addToPossibleTakes(xPosition+i,yPosition-i);
@@ -85,7 +85,7 @@ public class Queen extends Piece{
 			
 			this.addToPossibleLocations(xPosition+i,yPosition-i);
 		}
-		for(int i=0;i<8;i++) {
+		for(int i=1;i<8;i++) {
 			if(Mechanics.occupied(xPosition-i,yPosition+i)!=null && 
 					Mechanics.occupied(xPosition-i,yPosition+i).colour!=this.colour) {
 	    		this.addToPossibleTakes(xPosition+i,yPosition-i);

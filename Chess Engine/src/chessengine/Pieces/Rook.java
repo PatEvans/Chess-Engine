@@ -12,9 +12,9 @@ public class Rook extends Piece{
 	}
 	@Override
     public void possibleMoves() {
-		
+		possibleLocations.clear();
 		//These are the up down possible moves
-		for(int i=yPosition;i<8;i++) {
+		for(int i=yPosition+1;i<8;i++) {
 			//add takes first, then check for obstruction
 			if(Mechanics.occupied(xPosition,i)!=null && 
 					Mechanics.occupied(xPosition,i).colour!=this.colour) {
@@ -24,7 +24,7 @@ public class Rook extends Piece{
 			if(Mechanics.occupied(xPosition,i)!=null) break;
 			this.addToPossibleLocations(xPosition,i);
 		}
-		for(int i=yPosition;i>=0;i--) {
+		for(int i=yPosition-1;i>=0;i--) {
 			if(Mechanics.occupied(xPosition,i)!=null && 
 					Mechanics.occupied(xPosition,i).colour!=this.colour) {
 	    		this.addToPossibleTakes(xPosition,i);
@@ -34,7 +34,7 @@ public class Rook extends Piece{
 		}
 		
 		//These are the left right possible moves
-		for(int i=xPosition;i<8;i++) {
+		for(int i=xPosition+1;i<8;i++) {
 			if(Mechanics.occupied(i,yPosition)!=null && 
 					Mechanics.occupied(i,yPosition).colour!=this.colour) {
 	    		this.addToPossibleTakes(i,yPosition);
@@ -42,7 +42,7 @@ public class Rook extends Piece{
 			if(Mechanics.occupied(i,yPosition)!=null) break;
 	    	this.addToPossibleLocations(i,yPosition);
 		}
-		for(int i=xPosition;i>=0;i--) {
+		for(int i=xPosition-1;i>=0;i--) {
 			if(Mechanics.occupied(i,yPosition)!=null && 
 					Mechanics.occupied(i,yPosition).colour!=this.colour) {
 	    		this.addToPossibleTakes(i,yPosition);

@@ -12,6 +12,7 @@ public class Knight extends Piece{
 	}
 	@Override
 	public void possibleMoves() {
+		possibleLocations.clear();
 	    for(int i=-1;i<=1;i=i+2) {
 	    	for(int j=-1;j<=1;j=j+2) {
 	    		

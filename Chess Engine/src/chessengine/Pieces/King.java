@@ -10,6 +10,8 @@ public class King extends Piece{
 	}
 	@Override
     public void possibleMoves() {
+		 possibleLocations.clear();
+		
     	 this.addToPossibleLocations(xPosition,yPosition+1);
     	 this.addToPossibleLocations(xPosition,yPosition-1);
     	 this.addToPossibleLocations(xPosition-1,yPosition);

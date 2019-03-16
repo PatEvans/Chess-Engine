@@ -13,7 +13,7 @@ public class Pawn extends Piece{
 	}
 	@Override           
     public void possibleMoves() {
-		
+		possibleLocations.clear();
     	this.addToPossibleLocations(xPosition,(yPosition+(1*side)));
     	if(unmoved) {
     		 this.addToPossibleLocations(xPosition,(yPosition+(2*side)));
