@@ -50,12 +50,12 @@ public class Mechanics {
 	  }
 	  
 	  static void calculatePossibleMoves() {
-		  for(int i=0;i<32;i++) {
+		  for(int i=0;i<pieces.size();i++) {
 			  pieces.get(i).possibleMoves();
 		  }
 	  }
 	  static void printPieces() {
-		  for(int i=0;i<32;i++) {
+		  for(int i=0;i<pieces.size();i++) {
 			  System.out.println(pieces.get(i));
 		  }
 	  }
@@ -75,7 +75,7 @@ public class Mechanics {
 		  //Otherwise, if a check produced on the current player's team, return 2
 		  String myKingLocation=getKing(isWhiteToMove);
 		  String theirKingLocation=getKing(!isWhiteToMove);
-		  
+		  calculatePossibleMoves();
 		  
 		  ArrayList<String> piecePossibleLocations;
 		  for(int i=0;i<pieces.size();i++) {
@@ -104,34 +104,59 @@ public class Mechanics {
 	 public static boolean makeMove(String startPos,String endPos) {
 		Integer startX = Integer.parseInt(startPos.substring(0,1));
 		Integer startY = Integer.parseInt(startPos.substring(1));
-		for(int i=0;i<pieces.size();i++) {
-			 if(pieces.get(i).getX()==startX && pieces.get(i).getY()==startY) {
-				  if(pieces.get(i).getColour()!= isWhiteToMove) return false;
+		
+		Piece piece=occupied(startX,startY);
+	    if(piece.getColour()!= isWhiteToMove) return false;
 				 
-				  System.out.println(pieces.get(i));
-				  ArrayList<String> piecePossibleLocations=pieces.get(i).getPossibleLocations();
-				  for(int j=0;j<piecePossibleLocations.size();j++) {
-					  if(piecePossibleLocations.get(j).equals(endPos)){
-						  return parseAndMoveToLocation(pieces.get(i),endPos);
-					  }
-				  }
-				  break;
-			  }
-		}
+		    System.out.println(piece);
+			ArrayList<String> piecePossibleLocations=piece.getPossibleLocations();
+		    for(int j=0;j<piecePossibleLocations.size();j++) {
+			    if(piecePossibleLocations.get(j).equals(endPos)){
+				   return parseAndMoveToLocation(piece,endPos);
+			    }
+		    }
+				  
 		
 		return false;
 	}
 
 	private static boolean parseAndMoveToLocation(Piece piece, String endPos) {
+		Integer oldXPos=piece.getX();
+		Integer oldYPos=piece.getY();
 		if(endPos.substring(0,1).equals("x")) {
+			Integer newXPos = Integer.parseInt(endPos.substring(1,2));
+			Integer newYPos = Integer.parseInt(endPos.substring(2));
+			Piece removedPiece = null;
+			int i=0;
+			for(i=0;i<pieces.size();i++) {
+				  if(pieces.get(i).getX()==newXPos && pieces.get(i).getY()==newYPos) {
+					  removedPiece= pieces.get(i);
+					  break;
+				  }
+			}
+			pieces.remove(i);
+			piece.setX(newXPos);
+			piece.setY(newYPos);
 			
+			if(checkCheck()!=2) {
+				//move is confirmed good :)
+				//so other person gets to move
+				
+				isWhiteToMove=!isWhiteToMove;
+				return true;
+			}
+			else {
+				piece.setX(oldXPos);
+				piece.setY(oldYPos);
+				pieces.add(i,removedPiece);
+				return false;
+			}
 		}else {
 			
 			//what we do is set tentative values of x and y, calculate if a check
 			//on our king occurs, then if none, we return true
 			//Otherwise, reset and move fails
-			Integer oldXPos=piece.getX();
-			Integer oldYPos=piece.getY();
+			
 			Integer newXPos = Integer.parseInt(endPos.substring(0,1));
 			Integer newYPos = Integer.parseInt(endPos.substring(1));
 			piece.setX(newXPos);
@@ -148,6 +173,5 @@ public class Mechanics {
 				return false;
 			}
 		}
-		return false;
 	}
 }
