@@ -65,7 +65,7 @@ public class Queen extends Piece{
 			
 			this.addToPossibleLocations(xPosition+i,yPosition+i);
 		}
-		for(int i=1;i<8;i--) {
+		for(int i=1;i<8;i++) {
 			if(Mechanics.occupied(xPosition-i,yPosition-i)!=null && 
 					Mechanics.occupied(xPosition-i,yPosition-i).colour!=this.colour) {
 	    		this.addToPossibleTakes(xPosition-i,yPosition-i);
