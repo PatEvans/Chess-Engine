@@ -106,7 +106,7 @@ public class Mechanics {
 		Integer startY = Integer.parseInt(startPos.substring(1));
 		
 		Piece piece=occupied(startX,startY);
-	    if(piece.getColour()!= isWhiteToMove) return false;
+	    if(piece==null || piece.getColour()!= isWhiteToMove) return false;
 				 
 		    System.out.println(piece);
 			ArrayList<String> piecePossibleLocations=piece.getPossibleLocations();
@@ -114,8 +114,7 @@ public class Mechanics {
 			    if(piecePossibleLocations.get(j).equals(endPos)){
 				   return parseAndMoveToLocation(piece,endPos);
 			    }
-		    }
-				  
+		    }	  
 		
 		return false;
 	}
