@@ -68,7 +68,7 @@ public class Mechanics {
 		  return null;
 	  }
 	  
-	  public Integer checkCheck() {
+	  public static Integer checkCheck() {
 		  //if no check, return null,
 		  //if a check produced on the opponent and not on the current player's team
 		  //return 1
@@ -90,9 +90,9 @@ public class Mechanics {
 				  
 			  }
 		  }
-		  return null;
+		  return 0;
 	  }
-	  String getKing(boolean colour) {
+	  static String getKing(boolean colour) {
 		  for(int i=0;i<pieces.size();i++) {
 			  if(pieces.get(i).getColour()==colour && pieces.get(i).getName().equals("King")) {
 				  return  pieces.get(i).getX()+""+pieces.get(i).getY();
@@ -106,6 +106,8 @@ public class Mechanics {
 		Integer startY = Integer.parseInt(startPos.substring(1));
 		for(int i=0;i<pieces.size();i++) {
 			 if(pieces.get(i).getX()==startX && pieces.get(i).getY()==startY) {
+				  if(pieces.get(i).getColour()!= isWhiteToMove) return false;
+				 
 				  System.out.println(pieces.get(i));
 				  ArrayList<String> piecePossibleLocations=pieces.get(i).getPossibleLocations();
 				  for(int j=0;j<piecePossibleLocations.size();j++) {
@@ -121,7 +123,31 @@ public class Mechanics {
 	}
 
 	private static boolean parseAndMoveToLocation(Piece piece, String endPos) {
-		// TODO Auto-generated method stub
+		if(endPos.substring(0,1).equals("x")) {
+			
+		}else {
+			
+			//what we do is set tentative values of x and y, calculate if a check
+			//on our king occurs, then if none, we return true
+			//Otherwise, reset and move fails
+			Integer oldXPos=piece.getX();
+			Integer oldYPos=piece.getY();
+			Integer newXPos = Integer.parseInt(endPos.substring(0,1));
+			Integer newYPos = Integer.parseInt(endPos.substring(1));
+			piece.setX(newXPos);
+			piece.setY(newYPos);
+			
+			if(checkCheck()!=2) {
+				//move is confirmed good :)
+				//so other person gets to move
+				isWhiteToMove=!isWhiteToMove;
+				return true;
+			}else {
+				piece.setX(oldXPos);
+				piece.setY(oldYPos);
+				return false;
+			}
+		}
 		return true;
 	}
 }

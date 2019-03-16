@@ -38,6 +38,13 @@ public class Piece {
   public String getName() {
 	  return"piece";
   }
+  public void setX(int xPos) {
+	  xPosition=xPos;
+  }
+  public void setY(int yPos) {
+	  yPosition=yPos;
+  }
+  
   public int getX() {
 	  return xPosition;
   }

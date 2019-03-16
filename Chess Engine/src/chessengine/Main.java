@@ -16,7 +16,7 @@ public class Main {
 		  String move= input.nextLine();
 		  String startPos = move.substring(0,2);
 		  String endPos = move.substring(3);
-		  Mechanics.makeMove(startPos,endPos);
+		  System.out.println(Mechanics.makeMove(startPos,endPos));
 	  }
   }
   
