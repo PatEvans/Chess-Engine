@@ -101,16 +101,27 @@ public class Mechanics {
 		  return null;
 	  }
 
-	public static boolean makeMove(String startPos,String endPos) {
+	 public static boolean makeMove(String startPos,String endPos) {
 		Integer startX = Integer.parseInt(startPos.substring(0,1));
 		Integer startY = Integer.parseInt(startPos.substring(1));
 		for(int i=0;i<pieces.size();i++) {
 			 if(pieces.get(i).getX()==startX && pieces.get(i).getY()==startY) {
 				  System.out.println(pieces.get(i));
+				  ArrayList<String> piecePossibleLocations=pieces.get(i).getPossibleLocations();
+				  for(int j=0;j<piecePossibleLocations.size();j++) {
+					  if(piecePossibleLocations.get(j).equals(endPos)){
+						  return parseAndMoveToLocation(pieces.get(i),endPos);
+					  }
+				  }
 				  break;
 			  }
 		}
 		
+		return false;
+	}
+
+	private static boolean parseAndMoveToLocation(Piece piece, String endPos) {
+		// TODO Auto-generated method stub
 		return true;
 	}
 }
