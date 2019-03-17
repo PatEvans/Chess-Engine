@@ -136,7 +136,12 @@ public class Mechanics {
 				//move is confirmed good :)
 				//so other person gets to move
 				
-				isWhiteToMove=!isWhiteToMove;
+				//we ensure that pawns can't indefinetly move 2 squares
+				if(piece.getName().equals("Pawn")) {
+					((Pawn) piece).setMoved();
+				}
+			
+			    isWhiteToMove=!isWhiteToMove;
 				return true;
 			}
 			else {
@@ -162,6 +167,12 @@ public class Mechanics {
 			if(checkCheck()!=2) {
 				//move is confirmed good :)
 				//so other person gets to move
+				
+				//we ensure that pawns can't indefinetly move 2 squares
+				if(piece.getName().equals("Pawn")) {
+					((Pawn) piece).setMoved();
+				}
+				
 				isWhiteToMove=!isWhiteToMove;
 				return true;
 			}else {
