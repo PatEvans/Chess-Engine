@@ -49,9 +49,73 @@ public class Mechanics {
 		  
 		  
 	  }
-	  
+
+	//////////////  MOVE MECHANICS //////////////////
 	
-	  static void calculatePossibleMoves() {
+	public static boolean makeMove(String startPos,String endPos) {
+		Integer startX = Integer.parseInt(startPos.substring(0,1));
+		Integer startY = Integer.parseInt(startPos.substring(1));
+		
+		Piece piece=occupied(startX,startY);
+	    if(piece==null || piece.getColour()!= isWhiteToMove) return false;
+				 
+		    System.out.println(piece);
+			ArrayList<String> piecePossibleLocations=piece.getPossibleLocations();
+		    for(int j=0;j<piecePossibleLocations.size();j++) {
+			    if(piecePossibleLocations.get(j).equals(endPos)){
+				   return parseAndMoveToLocation(piece,endPos);
+			    }
+		    }	  
+		
+		return false;
+	}
+
+	private static boolean parseAndMoveToLocation(Piece piece, String endPos) {
+		if(endPos.substring(0,1).equals("x")) {
+			Piece removedPiece=takePiece(piece,endPos);
+			if(checkCheck()!=2) {
+				//move is confirmed good :)
+				//so other person gets to move
+				//we ensure that pawns can't indefinitely move 2 squares
+				if(piece.getName().equals("Pawn")) {
+					((Pawn) piece).setMoved();
+				}
+				isWhiteToMove=!isWhiteToMove;
+				return true;
+			}
+			else {
+				takeBack(piece,removedPiece,endPos);
+				return false;
+			}
+		}else {
+			
+			//what we do is set tentative values of x and y, calculate if a check
+			//on our king occurs, then if none, we return true
+			//Otherwise, reset and move fails
+			
+			movePiece(piece,endPos);
+			if(checkCheck()!=2) {
+				//move is confirmed good :)
+				//so other person gets to move
+				//we ensure that pawns can't indefinetly move 2 squares
+				
+				if(piece.getName().equals("Pawn")) {
+					((Pawn) piece).setMoved();
+				}
+				isWhiteToMove=!isWhiteToMove;
+				return true;
+			}else {
+				moveBack(piece,endPos);
+				return false;
+			}
+		}
+	}
+	
+	//////////////  MOVE CALCULATIONS //////////////////
+	
+	
+	
+	 static void calculatePossibleMoves() {
 		  //for(int i=0;i<pieces.size();i++) {
 			//  pieces.get(i).possibleMoves();
 		  //}
@@ -59,6 +123,7 @@ public class Mechanics {
 			    piece.possibleMoves();
 			}
 	  }
+	 
 	  static void printPieces() {
 		  for (Piece piece : pieces.values()) {
 			  System.out.println(piece);
@@ -91,86 +156,53 @@ public class Mechanics {
 		  return 0;
 	  }
 	
+	
 
-	 public static boolean makeMove(String startPos,String endPos) {
-		Integer startX = Integer.parseInt(startPos.substring(0,1));
-		Integer startY = Integer.parseInt(startPos.substring(1));
-		
-		Piece piece=occupied(startX,startY);
-	    if(piece==null || piece.getColour()!= isWhiteToMove) return false;
-				 
-		    System.out.println(piece);
-			ArrayList<String> piecePossibleLocations=piece.getPossibleLocations();
-		    for(int j=0;j<piecePossibleLocations.size();j++) {
-			    if(piecePossibleLocations.get(j).equals(endPos)){
-				   return parseAndMoveToLocation(piece,endPos);
-			    }
-		    }	  
-		
-		return false;
-	}
-
-	private static boolean parseAndMoveToLocation(Piece piece, String endPos) {
+	
+	/////////// Methods to manipulate the pieces hashmap and reset - will be reused so created here ///////////////
+	
+	private static Piece takePiece(Piece piece, String endPos) {
 		Integer oldXPos=piece.getX();
 		Integer oldYPos=piece.getY();
-		if(endPos.substring(0,1).equals("x")) {
-			Integer newXPos = Integer.parseInt(endPos.substring(1,2));
-			Integer newYPos = Integer.parseInt(endPos.substring(2));
-			Piece removedPiece = pieces.remove(newXPos+""+newYPos);
-			piece.setX(newXPos);
-			piece.setY(newYPos);
-			pieces.remove(oldXPos+""+oldYPos);
-			pieces.put(newXPos+""+newYPos,piece);
-			if(checkCheck()!=2) {
-				//move is confirmed good :)
-				//so other person gets to move
-				
-				//we ensure that pawns can't indefinetly move 2 squares
-				if(piece.getName().equals("Pawn")) {
-					((Pawn) piece).setMoved();
-				}
-				
-				isWhiteToMove=!isWhiteToMove;
-				return true;
-			}
-			else {
-				piece.setX(oldXPos);
-				piece.setY(oldYPos);
-				pieces.remove(newXPos+""+newYPos);
-				pieces.put(oldXPos+""+oldYPos,piece);
-				pieces.put(newXPos+""+newYPos,removedPiece);
-				return false;
-			}
-		}else {
-			
-			//what we do is set tentative values of x and y, calculate if a check
-			//on our king occurs, then if none, we return true
-			//Otherwise, reset and move fails
-			
-			Integer newXPos = Integer.parseInt(endPos.substring(0,1));
-			Integer newYPos = Integer.parseInt(endPos.substring(1));
-			piece.setX(newXPos);
-			piece.setY(newYPos);
-			pieces.remove(oldXPos+""+oldYPos);
-			pieces.put(newXPos+""+newYPos,piece);
-			if(checkCheck()!=2) {
-				//move is confirmed good :)
-				//so other person gets to move
-				
-				//we ensure that pawns can't indefinetly move 2 squares
-				if(piece.getName().equals("Pawn")) {
-					((Pawn) piece).setMoved();
-				}
-				
-				isWhiteToMove=!isWhiteToMove;
-				return true;
-			}else {
-				piece.setX(oldXPos);
-				piece.setY(oldYPos);
-				pieces.remove(newXPos+""+newYPos);
-				pieces.put(oldXPos+""+oldYPos,piece);
-				return false;
-			}
-		}
+		Integer newXPos = Integer.parseInt(endPos.substring(1,2));
+		Integer newYPos = Integer.parseInt(endPos.substring(2));
+		Piece removedPiece=pieces.remove(newXPos+""+newYPos);
+		piece.setX(newXPos);
+		piece.setY(newYPos);
+		pieces.remove(oldXPos+""+oldYPos);
+		pieces.put(newXPos+""+newYPos,piece);
+		return removedPiece;
+	}
+	private static void takeBack(Piece piece,Piece removedPiece, String endPos) {
+		Integer oldXPos=piece.getX();
+		Integer oldYPos=piece.getY();
+		Integer newXPos = Integer.parseInt(endPos.substring(1,2));
+		Integer newYPos = Integer.parseInt(endPos.substring(2));
+		piece.setX(oldXPos);
+		piece.setY(oldYPos);
+		pieces.remove(newXPos+""+newYPos);
+		pieces.put(oldXPos+""+oldYPos,piece);
+		pieces.put(newXPos+""+newYPos,removedPiece);
+	}
+	
+	private static void movePiece(Piece piece, String endPos) {
+		Integer oldXPos=piece.getX();
+		Integer oldYPos=piece.getY();
+		Integer newXPos = Integer.parseInt(endPos.substring(0,1));
+		Integer newYPos = Integer.parseInt(endPos.substring(1));
+		piece.setX(newXPos);
+		piece.setY(newYPos);
+		pieces.remove(oldXPos+""+oldYPos);
+		pieces.put(newXPos+""+newYPos,piece);
+	}
+	private static void moveBack(Piece piece, String endPos) {
+		Integer oldXPos=piece.getX();
+		Integer oldYPos=piece.getY();
+		Integer newXPos = Integer.parseInt(endPos.substring(0,1));
+		Integer newYPos = Integer.parseInt(endPos.substring(1));
+		piece.setX(oldXPos);
+		piece.setY(oldYPos);
+		pieces.remove(newXPos+""+newYPos);
+		pieces.put(oldXPos+""+oldYPos,piece);
 	}
 }
