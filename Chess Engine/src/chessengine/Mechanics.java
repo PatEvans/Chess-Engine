@@ -154,11 +154,11 @@ public class Mechanics {
 					  return 2;
 			  }
 			  if(piece.getCheck()==true && piece.getColour()==isWhiteToMove) {
-				      //if(preventRecursion==0) {
-				    	//  if(checkMate()) {
-				    //		  System.out.println("MATE\nMATE\nMATE\nMATE\nMATE\nMATE\nMATE\nMATE");
-				    	//  }
-				      //}
+				      if(preventRecursion==0) {
+				    	  if(checkMate()) {
+				    		  System.out.println("MATE\nMATE\nMATE\nMATE\nMATE\nMATE\nMATE\nMATE");
+				    	  }
+				      }
 					  return 1;
 			  }
 			  
@@ -168,22 +168,26 @@ public class Mechanics {
 	
 	  private static boolean checkMate() {
 		    boolean checkMate=true;
-		    Iterator it = pieces.entrySet().iterator();
-		    while (it.hasNext()) {
-		    	Map.Entry pair = (Map.Entry)it.next();
-		    	Piece piece=(Piece) pair.getValue();
+		    HashMap<String,Piece> localPieces=new HashMap<String,Piece>(pieces);
+		    Iterator it = localPieces.entrySet().iterator();
+		    for (Piece piece : localPieces.values()) {
+		    	
 				if(piece.getColour()!=isWhiteToMove) {
 					ArrayList<String> piecePossibleLocations=piece.getPossibleLocations();
-				
+				   calculatePossibleMoves();
 				   for(int j=0;j<piecePossibleLocations.size();j++) {
+					 
 					 String consideredLocation = piecePossibleLocations.get(j);
+					 System.out.println(piece+consideredLocation);
 					 Integer oldXPos=piece.getX();
 					 Integer oldYPos=piece.getY();
+					 
 					 if(consideredLocation.substring(0,1).equals("x")) {
 						 //takes
 						 Piece removedPiece=takePiece(piece,consideredLocation);
 						 calculatePossibleMoves();
 						 if(checkCheck(1)!=1) {
+							// System.out.println(piece+consideredLocation);
 							 checkMate=false;
 						 }
 						 takeBack(piece,removedPiece,consideredLocation,oldXPos,oldYPos);
@@ -194,16 +198,18 @@ public class Mechanics {
 						 movePiece(piece,consideredLocation);
 						 calculatePossibleMoves();
 						 if(checkCheck(1)!=1) {
+							 System.out.println(piece+consideredLocation);
 							 checkMate=false;
 						 }
 						 moveBack(piece,consideredLocation,oldXPos,oldYPos);
 					 }
+					 calculatePossibleMoves();
 				  }
 				}
 			}
 			
 			
-			return isWhiteToMove;
+			return checkMate;
 		}
 
 	
