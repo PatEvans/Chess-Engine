@@ -29,6 +29,10 @@ public class Pawn extends Piece{
     		this.addToPossibleTakes(xPosition-1,yPosition+1);
     	}
     }
+	public void setMoved() {
+		unmoved=false;
+	}
+	
 	public String toString() {
 		return "Pawn " + super.toString();
 	}
