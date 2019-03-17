@@ -1,6 +1,7 @@
 package chessengine;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import chessengine.Pieces.Bishop;
 import chessengine.Pieces.King;
@@ -11,61 +12,62 @@ import chessengine.Pieces.Queen;
 import chessengine.Pieces.Rook;
 
 public class Mechanics {
-	static ArrayList<Piece> pieces;
+	static HashMap<String,Piece> pieces;
 	static boolean isWhiteToMove;
 	
 	static void initialisePieces(boolean whiteToMove) {
 		  isWhiteToMove = whiteToMove;
-		  pieces = new ArrayList<Piece>();;
+		  pieces = new HashMap<String,Piece>();;
 		  //add player's pieces, then computer's
 		  int side =1;
 		  for(int i=0;i<8;i++) {
-			  pieces.add((Piece) new Pawn(i,1,side,whiteToMove));
+			  pieces.put(i+"1",(Piece) new Pawn(i,1,side,whiteToMove));
 		  }
-		  pieces.add( (Piece) new Rook(0,0,side,whiteToMove));
-		  pieces.add( (Piece) new Rook(7,0,side,whiteToMove));
-		  pieces.add( (Piece) new Knight(1,0,side,whiteToMove));
-		  pieces.add( (Piece) new Knight(6,0,side,whiteToMove));
-		  pieces.add( (Piece) new Bishop(2,0,side,whiteToMove));
-		  pieces.add( (Piece) new Bishop(5,0,side,whiteToMove));
-		  pieces.add( (Piece) new Queen(3,0,side,whiteToMove));
-		  pieces.add( (Piece) new King(4,0,side,whiteToMove));
+		  pieces.put("00", (Piece) new Rook(0,0,side,whiteToMove));
+		  pieces.put("70",(Piece) new Rook(7,0,side,whiteToMove));
+		  pieces.put("10",(Piece) new Knight(1,0,side,whiteToMove));
+		  pieces.put("60",(Piece) new Knight(6,0,side,whiteToMove));
+		  pieces.put("20",(Piece) new Bishop(2,0,side,whiteToMove));
+		  pieces.put("50",(Piece) new Bishop(5,0,side,whiteToMove));
+		  pieces.put("30",(Piece) new Queen(3,0,side,whiteToMove));
+		  pieces.put("40",(Piece) new King(4,0,side,whiteToMove));
 		  
 		  side =-side;
 		  whiteToMove=!whiteToMove;
 		  
 		  for(int i=16;i<24;i++) {
-			  pieces.add( (Piece) new Pawn(i-16,6,side,whiteToMove));
+			  pieces.put((i-16)+"6",(Piece) new Pawn(i-16,6,side,whiteToMove));
 		  }
-		  pieces.add( (Piece) new Rook(0,7,side,whiteToMove));
-		  pieces.add( (Piece) new Rook(7,7,side,whiteToMove));
-		  pieces.add( (Piece) new Knight(1,7,side,whiteToMove));
-		  pieces.add( (Piece) new Knight(6,7,side,whiteToMove));
-		  pieces.add( (Piece) new Bishop(2,7,side,whiteToMove));
-		  pieces.add( (Piece) new Bishop(5,7,side,whiteToMove));
-		  pieces.add( (Piece) new Queen(3,7,side,whiteToMove));
-		  pieces.add( (Piece) new King(4,7,side,whiteToMove));
+		  pieces.put("07",(Piece) new Rook(0,7,side,whiteToMove));
+		  pieces.put("77",(Piece) new Rook(7,7,side,whiteToMove));
+		  pieces.put("17",(Piece) new Knight(1,7,side,whiteToMove));
+		  pieces.put("67",(Piece) new Knight(6,7,side,whiteToMove));
+		  pieces.put("27",(Piece) new Bishop(2,7,side,whiteToMove));
+		  pieces.put("57",(Piece) new Bishop(5,7,side,whiteToMove));
+		  pieces.put("37",(Piece) new Queen(3,7,side,whiteToMove));
+		  pieces.put("47",(Piece) new King(4,7,side,whiteToMove));
 		  
 		  
 	  }
 	  
+	
 	  static void calculatePossibleMoves() {
-		  for(int i=0;i<pieces.size();i++) {
-			  pieces.get(i).possibleMoves();
-		  }
+		  //for(int i=0;i<pieces.size();i++) {
+			//  pieces.get(i).possibleMoves();
+		  //}
+		  for (Piece piece : pieces.values()) {
+			    piece.possibleMoves();
+			}
 	  }
 	  static void printPieces() {
-		  for(int i=0;i<pieces.size();i++) {
-			  System.out.println(pieces.get(i));
-		  }
+		  for (Piece piece : pieces.values()) {
+			  System.out.println(piece);
+			}
 	  }
 	  public static Piece occupied(int x,int y) {
-		  for(int i=0;i<pieces.size();i++) {
-			  if(pieces.get(i).getX()==x && pieces.get(i).getY()==y) {
-				  return pieces.get(i);
-			  }
-		  }
-		  return null;
+		  
+		  return pieces.get(x+""+y);
+			  
 	  }
 	  
 	  public static Integer checkCheck() {
@@ -78,8 +80,8 @@ public class Mechanics {
 		  calculatePossibleMoves();
 		  
 		  ArrayList<String> piecePossibleLocations;
-		  for(int i=0;i<pieces.size();i++) {
-			  piecePossibleLocations=pieces.get(i).getPossibleLocations();
+		  for (Piece piece : pieces.values()) {
+			  piecePossibleLocations=piece.getPossibleLocations();
 			  for(int j=0;j<piecePossibleLocations.size();j++) {
 				  if(piecePossibleLocations.get(j).equals("x"+myKingLocation)) {
 					  return 2;
@@ -93,9 +95,9 @@ public class Mechanics {
 		  return 0;
 	  }
 	  static String getKing(boolean colour) {
-		  for(int i=0;i<pieces.size();i++) {
-			  if(pieces.get(i).getColour()==colour && pieces.get(i).getName().equals("King")) {
-				  return  pieces.get(i).getX()+""+pieces.get(i).getY();
+		  for (Piece piece : pieces.values()) {
+			  if(piece.getColour()==colour && piece.getName().equals("King")) {
+				  return  piece.getX()+""+piece.getY();
 			  }
 		  }
 		  return null;
@@ -125,18 +127,11 @@ public class Mechanics {
 		if(endPos.substring(0,1).equals("x")) {
 			Integer newXPos = Integer.parseInt(endPos.substring(1,2));
 			Integer newYPos = Integer.parseInt(endPos.substring(2));
-			Piece removedPiece = null;
-			int i=0;
-			for(i=0;i<pieces.size();i++) {
-				  if(pieces.get(i).getX()==newXPos && pieces.get(i).getY()==newYPos) {
-					  removedPiece= pieces.get(i);
-					  break;
-				  }
-			}
-			pieces.remove(i);
+			Piece removedPiece = pieces.remove(newXPos+""+newYPos);
 			piece.setX(newXPos);
 			piece.setY(newYPos);
-			
+			pieces.remove(oldXPos+""+oldYPos);
+			pieces.put(newXPos+""+newYPos,piece);
 			if(checkCheck()!=2) {
 				//move is confirmed good :)
 				//so other person gets to move
@@ -147,7 +142,9 @@ public class Mechanics {
 			else {
 				piece.setX(oldXPos);
 				piece.setY(oldYPos);
-				pieces.add(i,removedPiece);
+				pieces.remove(newXPos+""+newYPos);
+				pieces.put(oldXPos+""+oldYPos,piece);
+				pieces.put(newXPos+""+newYPos,removedPiece);
 				return false;
 			}
 		}else {
@@ -160,7 +157,8 @@ public class Mechanics {
 			Integer newYPos = Integer.parseInt(endPos.substring(1));
 			piece.setX(newXPos);
 			piece.setY(newYPos);
-			
+			pieces.remove(oldXPos+""+oldYPos);
+			pieces.put(newXPos+""+newYPos,piece);
 			if(checkCheck()!=2) {
 				//move is confirmed good :)
 				//so other person gets to move
@@ -169,6 +167,8 @@ public class Mechanics {
 			}else {
 				piece.setX(oldXPos);
 				piece.setY(oldYPos);
+				pieces.remove(newXPos+""+newYPos);
+				pieces.put(oldXPos+""+oldYPos,piece);
 				return false;
 			}
 		}
