@@ -15,7 +15,7 @@ public class Pawn extends Piece{
     public void possibleMoves() {
 		possibleLocations.clear();
     	this.addToPossibleLocations(xPosition,(yPosition+(1*side)));
-    	if(unmoved) {
+    	if(unmoved && Mechanics.occupied(xPosition,(yPosition+(1*side)))==null ) {
     		 this.addToPossibleLocations(xPosition,(yPosition+(2*side)));
     	}
     	
