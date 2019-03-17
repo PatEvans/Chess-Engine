@@ -2,6 +2,9 @@ package chessengine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import chessengine.Pieces.Bishop;
 import chessengine.Pieces.King;
@@ -71,9 +74,11 @@ public class Mechanics {
 	}
 
 	private static boolean parseAndMoveToLocation(Piece piece, String endPos) {
+		 Integer oldXPos=piece.getX();
+		 Integer oldYPos=piece.getY();
 		if(endPos.substring(0,1).equals("x")) {
 			Piece removedPiece=takePiece(piece,endPos);
-			if(checkCheck()!=2) {
+			if(checkCheck(0)!=2) {
 				//move is confirmed good :)
 				//so other person gets to move
 				//we ensure that pawns can't indefinitely move 2 squares
@@ -84,7 +89,7 @@ public class Mechanics {
 				return true;
 			}
 			else {
-				takeBack(piece,removedPiece,endPos);
+				takeBack(piece,removedPiece,endPos,oldXPos,oldYPos);
 				return false;
 			}
 		}else {
@@ -94,10 +99,10 @@ public class Mechanics {
 			//Otherwise, reset and move fails
 			
 			movePiece(piece,endPos);
-			if(checkCheck()!=2) {
+			if(checkCheck(0)!=2) {
 				//move is confirmed good :)
 				//so other person gets to move
-				//we ensure that pawns can't indefinetly move 2 squares
+				//we ensure that pawns can't indefinitely move 2 squares
 				
 				if(piece.getName().equals("Pawn")) {
 					((Pawn) piece).setMoved();
@@ -105,15 +110,15 @@ public class Mechanics {
 				isWhiteToMove=!isWhiteToMove;
 				return true;
 			}else {
-				moveBack(piece,endPos);
+				moveBack(piece,endPos,oldXPos,oldYPos);
+				System.out.println("MovedBack");
 				return false;
 			}
 		}
 	}
 	
+	
 	//////////////  MOVE CALCULATIONS //////////////////
-	
-	
 	
 	 static void calculatePossibleMoves() {
 		  //for(int i=0;i<pieces.size();i++) {
@@ -135,7 +140,7 @@ public class Mechanics {
 			  
 	  }
 	  
-	  public static Integer checkCheck() {
+	  public static Integer checkCheck(int preventRecursion) {
 		  //if no check, return null,
 		  //if a check produced on the opponent and not on the current player's team
 		  //return 1
@@ -149,6 +154,11 @@ public class Mechanics {
 					  return 2;
 			  }
 			  if(piece.getCheck()==true && piece.getColour()==isWhiteToMove) {
+				      //if(preventRecursion==0) {
+				    	//  if(checkMate()) {
+				    //		  System.out.println("MATE\nMATE\nMATE\nMATE\nMATE\nMATE\nMATE\nMATE");
+				    	//  }
+				      //}
 					  return 1;
 			  }
 			  
@@ -156,7 +166,45 @@ public class Mechanics {
 		  return 0;
 	  }
 	
-	
+	  private static boolean checkMate() {
+		    boolean checkMate=true;
+		    Iterator it = pieces.entrySet().iterator();
+		    while (it.hasNext()) {
+		    	Map.Entry pair = (Map.Entry)it.next();
+		    	Piece piece=(Piece) pair.getValue();
+				if(piece.getColour()!=isWhiteToMove) {
+					ArrayList<String> piecePossibleLocations=piece.getPossibleLocations();
+				
+				   for(int j=0;j<piecePossibleLocations.size();j++) {
+					 String consideredLocation = piecePossibleLocations.get(j);
+					 Integer oldXPos=piece.getX();
+					 Integer oldYPos=piece.getY();
+					 if(consideredLocation.substring(0,1).equals("x")) {
+						 //takes
+						 Piece removedPiece=takePiece(piece,consideredLocation);
+						 calculatePossibleMoves();
+						 if(checkCheck(1)!=1) {
+							 checkMate=false;
+						 }
+						 takeBack(piece,removedPiece,consideredLocation,oldXPos,oldYPos);
+					 }
+					 else {
+						 //not takes
+						 
+						 movePiece(piece,consideredLocation);
+						 calculatePossibleMoves();
+						 if(checkCheck(1)!=1) {
+							 checkMate=false;
+						 }
+						 moveBack(piece,consideredLocation,oldXPos,oldYPos);
+					 }
+				  }
+				}
+			}
+			
+			
+			return isWhiteToMove;
+		}
 
 	
 	/////////// Methods to manipulate the pieces hashmap and reset - will be reused so created here ///////////////
@@ -173,9 +221,7 @@ public class Mechanics {
 		pieces.put(newXPos+""+newYPos,piece);
 		return removedPiece;
 	}
-	private static void takeBack(Piece piece,Piece removedPiece, String endPos) {
-		Integer oldXPos=piece.getX();
-		Integer oldYPos=piece.getY();
+	private static void takeBack(Piece piece,Piece removedPiece, String endPos,int oldXPos,int oldYPos) {
 		Integer newXPos = Integer.parseInt(endPos.substring(1,2));
 		Integer newYPos = Integer.parseInt(endPos.substring(2));
 		piece.setX(oldXPos);
@@ -195,9 +241,8 @@ public class Mechanics {
 		pieces.remove(oldXPos+""+oldYPos);
 		pieces.put(newXPos+""+newYPos,piece);
 	}
-	private static void moveBack(Piece piece, String endPos) {
-		Integer oldXPos=piece.getX();
-		Integer oldYPos=piece.getY();
+	private static void moveBack(Piece piece, String endPos,int oldXPos,int oldYPos) {
+		
 		Integer newXPos = Integer.parseInt(endPos.substring(0,1));
 		Integer newYPos = Integer.parseInt(endPos.substring(1));
 		piece.setX(oldXPos);
