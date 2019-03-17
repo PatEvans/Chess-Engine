@@ -167,9 +167,7 @@ public class Mechanics {
 	  }
 	
 	  private static boolean checkMate() {
-		    boolean checkMate=true;
 		    HashMap<String,Piece> localPieces=new HashMap<String,Piece>(pieces);
-		    Iterator it = localPieces.entrySet().iterator();
 		    for (Piece piece : localPieces.values()) {
 		    	
 				if(piece.getColour()!=isWhiteToMove) {
@@ -178,7 +176,7 @@ public class Mechanics {
 				   for(int j=0;j<piecePossibleLocations.size();j++) {
 					 
 					 String consideredLocation = piecePossibleLocations.get(j);
-					 System.out.println(piece+consideredLocation);
+					 //System.out.println(piece+consideredLocation);
 					 Integer oldXPos=piece.getX();
 					 Integer oldYPos=piece.getY();
 					 
@@ -188,7 +186,9 @@ public class Mechanics {
 						 calculatePossibleMoves();
 						 if(checkCheck(1)!=1) {
 							// System.out.println(piece+consideredLocation);
-							 checkMate=false;
+							 takeBack(piece,removedPiece,consideredLocation,oldXPos,oldYPos);
+							 calculatePossibleMoves();
+							 return false;
 						 }
 						 takeBack(piece,removedPiece,consideredLocation,oldXPos,oldYPos);
 					 }
@@ -198,8 +198,9 @@ public class Mechanics {
 						 movePiece(piece,consideredLocation);
 						 calculatePossibleMoves();
 						 if(checkCheck(1)!=1) {
-							 System.out.println(piece+consideredLocation);
-							 checkMate=false;
+							 moveBack(piece,consideredLocation,oldXPos,oldYPos);
+							 calculatePossibleMoves();
+							 return false;
 						 }
 						 moveBack(piece,consideredLocation,oldXPos,oldYPos);
 					 }
@@ -209,7 +210,7 @@ public class Mechanics {
 			}
 			
 			
-			return checkMate;
+			return true;
 		}
 
 	
