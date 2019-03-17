@@ -13,7 +13,7 @@ public class King extends Piece{
 	@Override
     public void possibleMoves() {
 		 possibleLocations.clear();
-		
+		 checkDelivered=false;
     	 this.addToPossibleLocations(xPosition,yPosition+1);
     	 if(Mechanics.occupied(xPosition,yPosition+1)!=null && 
  				Mechanics.occupied(xPosition,yPosition+1).colour!=this.colour) {

@@ -11,6 +11,7 @@ public class Piece {
   ArrayList<String> possibleLocations = new ArrayList<String>();
   int side;
   boolean colour;
+  boolean checkDelivered;
   public void possibleMoves() {}
   public void addToPossibleLocations(int x,int y) {
 	  
@@ -23,6 +24,9 @@ public class Piece {
   }
   
   public void addToPossibleTakes(int x,int y) {
+	  if(Mechanics.occupied(x,y).getName().equals("King")) {
+		  checkDelivered=true;
+	  }
 	  possibleLocations.add("x"+x+""+y);
   }
   
@@ -37,6 +41,10 @@ public class Piece {
   }
   public String getName() {
 	  return"piece";
+  }
+  
+  public boolean getCheck() {
+	  return checkDelivered;
   }
   public void setX(int xPos) {
 	  xPosition=xPos;

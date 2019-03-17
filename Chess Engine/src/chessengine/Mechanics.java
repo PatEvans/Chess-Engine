@@ -75,33 +75,22 @@ public class Mechanics {
 		  //if a check produced on the opponent and not on the current player's team
 		  //return 1
 		  //Otherwise, if a check produced on the current player's team, return 2
-		  String myKingLocation=getKing(isWhiteToMove);
-		  String theirKingLocation=getKing(!isWhiteToMove);
+		
 		  calculatePossibleMoves();
 		  
-		  ArrayList<String> piecePossibleLocations;
 		  for (Piece piece : pieces.values()) {
-			  piecePossibleLocations=piece.getPossibleLocations();
-			  for(int j=0;j<piecePossibleLocations.size();j++) {
-				  if(piecePossibleLocations.get(j).equals("x"+myKingLocation)) {
+			  
+			  if(piece.getCheck()==true && piece.getColour()!=isWhiteToMove) {
 					  return 2;
-				  }
-				  if(piecePossibleLocations.get(j).equals("x"+theirKingLocation)) {
-					  return 1;
-				  }
-				  
 			  }
+			  if(piece.getCheck()==true && piece.getColour()==isWhiteToMove) {
+					  return 1;
+			  }
+			  
 		  }
 		  return 0;
 	  }
-	  static String getKing(boolean colour) {
-		  for (Piece piece : pieces.values()) {
-			  if(piece.getColour()==colour && piece.getName().equals("King")) {
-				  return  piece.getX()+""+piece.getY();
-			  }
-		  }
-		  return null;
-	  }
+	
 
 	 public static boolean makeMove(String startPos,String endPos) {
 		Integer startX = Integer.parseInt(startPos.substring(0,1));

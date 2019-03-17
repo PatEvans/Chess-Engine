@@ -13,6 +13,7 @@ public class Rook extends Piece{
 	@Override
     public void possibleMoves() {
 		possibleLocations.clear();
+		checkDelivered=false;
 		//These are the up down possible moves
 		for(int i=yPosition+1;i<8;i++) {
 			//add takes first, then check for obstruction

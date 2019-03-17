@@ -14,6 +14,7 @@ public class Queen extends Piece{
     public void possibleMoves() {
 		//Has a combination of the Rook's moves and the bishop's
 		possibleLocations.clear();
+		checkDelivered=false;
 		//These are the up down possible moves
 		for(int i=yPosition+1;i<8;i++) {
 			//add takes first, then check for obstruction

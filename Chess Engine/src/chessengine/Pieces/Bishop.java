@@ -14,6 +14,7 @@ public class Bishop extends Piece{
     public void possibleMoves() {
 		possibleLocations.clear();
 		//These are the y=x possible moves
+		checkDelivered=false;
 		for(int i=1;i<8;i++) {
 			//add takes first, then check for obstruction
 			if(Mechanics.occupied(xPosition+i,yPosition+i)!=null && 
