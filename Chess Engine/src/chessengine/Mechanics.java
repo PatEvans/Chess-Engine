@@ -124,11 +124,35 @@ public class Mechanics {
 				}
 				if(piece.getName().equals("King")) {
 					//hacky approach to check if a two move has been made
+					
 					if(piece.getUnmoved()==true && (Math.abs(oldXPos-Integer.parseInt(endPos.substring(0,1)))==2)) {
+						//this ensures castling rights revoked when in check
+						//or through check
+						moveBack(piece,endPos,oldXPos,oldYPos);
+						if(checkCheck(0)==2) {
+							return false;
+						}
+						if(endPos.substring(0,1).contentEquals("6") ) {
+							String checkPos="5"+oldYPos;
+							movePiece(piece,checkPos);
+							if(checkCheck(0)==2) {
+								return false;
+							}
+							moveBack(piece,checkPos,oldXPos,oldYPos);
+						}
+						else if(endPos.substring(0,1).contentEquals("2") ) {
+							String checkPos="3"+oldYPos;
+							movePiece(piece,checkPos);
+							if(checkCheck(0)==2) {
+								return false;
+							}
+							moveBack(piece,checkPos,oldXPos,oldYPos);
+						}
+						movePiece(piece,endPos);
 						if(endPos.substring(0,1).contentEquals("6") ) {
 							makeMove("7"+ oldYPos,"c5"+oldYPos);
 						}
-						if(endPos.substring(0,1).contentEquals("1") ) {
+						else if(endPos.substring(0,1).contentEquals("2") ) {
 							makeMove("0"+ oldYPos,"c3"+oldYPos);
 						}
 						isWhiteToMove=!isWhiteToMove;
