@@ -30,6 +30,10 @@ public class Piece {
 	  possibleLocations.add("x"+x+""+y);
   }
   
+  public void addToPossibleEnPassant(int x,int y) {
+	  possibleLocations.add("e"+x+""+y);
+  }
+  
   public String toString() {
 	  return xPosition + " " + yPosition + " " + side + " "+colour+"   " +possibleLocations;
   }
@@ -58,5 +62,8 @@ public class Piece {
   }
   public int getY() {
 	  return yPosition;
+  }
+  public int getSide() {
+	  return side;
   }
 }

@@ -76,14 +76,24 @@ public class Mechanics {
 	private static boolean parseAndMoveToLocation(Piece piece, String endPos) {
 		 Integer oldXPos=piece.getX();
 		 Integer oldYPos=piece.getY();
-		if(endPos.substring(0,1).equals("x")) {
+		if(endPos.substring(0,1).equals("x")||endPos.substring(0,1).equals("e")) {
 			Piece removedPiece=takePiece(piece,endPos);
 			if(checkCheck(0)!=2) {
 				//move is confirmed good :)
 				//so other person gets to move
 				//we ensure that pawns can't indefinitely move 2 squares
+				//and ensures that en passant works correctly
+				resetEnPassant();
 				if(piece.getName().equals("Pawn")) {
+					//hacky approach to check if a two move has been made
+					if(((Pawn) piece).getUnmoved()==true && (Math.abs(oldYPos-Integer.parseInt(endPos.substring(2)))==2)) {
+						((Pawn) piece).setEnPassant(true);
+					}
+					else {
+						((Pawn) piece).setEnPassant(false);
+					}
 					((Pawn) piece).setMoved();
+					
 				}
 				isWhiteToMove=!isWhiteToMove;
 				return true;
@@ -103,8 +113,13 @@ public class Mechanics {
 				//move is confirmed good :)
 				//so other person gets to move
 				//we ensure that pawns can't indefinitely move 2 squares
-				
+				//and ensures that en passant works correctly
+				resetEnPassant();
 				if(piece.getName().equals("Pawn")) {
+					//hacky approach to check if a two move has been made
+					if(((Pawn) piece).getUnmoved()==true && (Math.abs(oldYPos-Integer.parseInt(endPos.substring(1)))==2)) {
+						((Pawn) piece).setEnPassant(true);
+					}
 					((Pawn) piece).setMoved();
 				}
 				isWhiteToMove=!isWhiteToMove;
@@ -157,6 +172,8 @@ public class Mechanics {
 				      if(preventRecursion==0) {
 				    	  if(checkMate()) {
 				    		  System.out.println("MATE\nMATE\nMATE\nMATE\nMATE\nMATE\nMATE\nMATE");
+				    	  }else {
+				    		  System.out.println("CHECK\nCHECK\nCHECK\nCHECK\nCHECK\nCHECK\nCHECK\nCHECK");
 				    	  }
 				      }
 					  return 1;
@@ -180,7 +197,7 @@ public class Mechanics {
 					 Integer oldXPos=piece.getX();
 					 Integer oldYPos=piece.getY();
 					 
-					 if(consideredLocation.substring(0,1).equals("x")) {
+					 if(consideredLocation.substring(0,1).equals("x")||consideredLocation.substring(0,1).equals("e")) {
 						 //takes
 						 Piece removedPiece=takePiece(piece,consideredLocation);
 						 calculatePossibleMoves();
@@ -212,7 +229,15 @@ public class Mechanics {
 			
 			return true;
 		}
-
+	  
+	  private static void resetEnPassant() {
+		  for(int i=0;i<8;i++) {
+			  for(int j  = 3;j<5;j++) {
+				  if(occupied(i,j)!=null && occupied(i,j).getName()=="Pawn")
+				  ((Pawn) occupied(i,j)).setEnPassant(false);
+			  }
+		  }
+	  }
 	
 	/////////// Methods to manipulate the pieces hashmap and reset - will be reused so created here ///////////////
 	
@@ -222,21 +247,40 @@ public class Mechanics {
 		Integer newXPos = Integer.parseInt(endPos.substring(1,2));
 		Integer newYPos = Integer.parseInt(endPos.substring(2));
 		Piece removedPiece=pieces.remove(newXPos+""+newYPos);
-		piece.setX(newXPos);
-		piece.setY(newYPos);
+		
+		if(endPos.substring(0,1).equals("e")) {
+			newYPos = newYPos+piece.getSide();
+			piece.setX(newXPos);
+			piece.setY(newYPos);
+		}else {
+			piece.setX(newXPos);
+			piece.setY(newYPos);
+		}
 		pieces.remove(oldXPos+""+oldYPos);
 		pieces.put(newXPos+""+newYPos,piece);
 		return removedPiece;
+		
 	}
 	private static void takeBack(Piece piece,Piece removedPiece, String endPos,int oldXPos,int oldYPos) {
 		Integer newXPos = Integer.parseInt(endPos.substring(1,2));
-		Integer newYPos = Integer.parseInt(endPos.substring(2));
+		Integer newYPos;
+		if(endPos.substring(0,1).equals("e")) {
+			newYPos = Integer.parseInt(endPos.substring(2))+piece.getSide();
+		}else {
+			newYPos = Integer.parseInt(endPos.substring(2));
+		}
 		piece.setX(oldXPos);
 		piece.setY(oldYPos);
 		pieces.remove(newXPos+""+newYPos);
 		pieces.put(oldXPos+""+oldYPos,piece);
+		
+		if(endPos.substring(0,1).equals("e")) {
+			newYPos = Integer.parseInt(endPos.substring(2));
+		}
 		pieces.put(newXPos+""+newYPos,removedPiece);
 	}
+	
+	
 	
 	private static void movePiece(Piece piece, String endPos) {
 		Integer oldXPos=piece.getX();
