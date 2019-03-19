@@ -3,7 +3,7 @@ package chessengine.Pieces;
 import chessengine.*;
 
 public class Pawn extends Piece{
-	boolean unmoved=true;
+
 	boolean canBeTakenEnPassant=false;
 	public Pawn(int startX,int startY,int side,boolean colour){
 		this.xPosition=startX;
@@ -55,12 +55,6 @@ public class Pawn extends Piece{
 		return(canBeTakenEnPassant);
 	}
 	
-	public void setMoved() {
-		unmoved=false;
-	}
-	public boolean getUnmoved() {
-		return unmoved;
-	}
 	public String toString() {
 		return "Pawn " + super.toString() + " "+canBeTakenEnPassant;
 	}

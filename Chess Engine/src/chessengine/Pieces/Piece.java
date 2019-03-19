@@ -12,6 +12,7 @@ public class Piece {
   int side;
   boolean colour;
   boolean checkDelivered;
+  boolean unmoved=true;
   public void possibleMoves() {}
   public void addToPossibleLocations(int x,int y) {
 	  
@@ -33,7 +34,12 @@ public class Piece {
   public void addToPossibleEnPassant(int x,int y) {
 	  possibleLocations.add("e"+x+""+y);
   }
-  
+  public void setMoved() {
+		unmoved=false;
+	}
+	public boolean getUnmoved() {
+		return unmoved;
+	}
   public String toString() {
 	  return xPosition + " " + yPosition + " " + side + " "+colour+"   " +possibleLocations;
   }

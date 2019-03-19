@@ -3,7 +3,6 @@ package chessengine.Pieces;
 import chessengine.Mechanics;
 
 public class King extends Piece{
-
 	public King(int startX,int startY,int side,boolean colour){
 		this.xPosition=startX;
 		this.yPosition=startY;
@@ -38,6 +37,7 @@ public class King extends Piece{
 	    		this.addToPossibleTakes(xPosition+1,yPosition);
 	    	}
     	 
+    	 //Add standard locations
     	 for(int i=-1;i<=1;i=i+2) {
  	    	for(int j=-1;j<=1;j=j+2) {
  	    		if(Mechanics.occupied(xPosition+i,yPosition+j)!=null && 
@@ -47,6 +47,35 @@ public class King extends Piece{
  	    		this.addToPossibleLocations(xPosition+i,yPosition+j);
  	    	}
  	    }
+    	 
+    	//Add castling - a bit more tricky
+    	 if(unmoved) {
+    		 //Queenside castle
+    		 if(Mechanics.occupied(0,0)!=null &&
+    				 Mechanics.occupied(0,0).getUnmoved() && side==1 && 
+    				 Mechanics.occupied(1,0)==null && Mechanics.occupied(2,0)==null) {
+    			 this.addToPossibleLocations(xPosition-2,0);
+    		 }
+    		 //Kingside Castle
+    		 if(Mechanics.occupied(7,0)!=null &&
+    				 Mechanics.occupied(7,0).getUnmoved() && side==1 && 
+    				 Mechanics.occupied(5,0)==null && Mechanics.occupied(6,0)==null) {
+    			 this.addToPossibleLocations(xPosition+2,0);
+    		 }
+    		 
+    		 //Queenside castle
+    		 if(Mechanics.occupied(0,7)!=null &&
+    				 Mechanics.occupied(0,7).getUnmoved() && side==-1 && 
+    				 Mechanics.occupied(1,7)==null && Mechanics.occupied(2,7)==null) {
+    			 this.addToPossibleLocations(xPosition-2,7);
+    		 }
+    		 //Kingside Castle
+    		 if(Mechanics.occupied(7,7)!=null &&
+    				 Mechanics.occupied(7,7).getUnmoved() && side==-1 && 
+    				 Mechanics.occupied(5,7)==null && Mechanics.occupied(6,7)==null) {
+    			 this.addToPossibleLocations(xPosition+2,7);
+    		 }
+    	 }
 	
     }
 	public String toString() {

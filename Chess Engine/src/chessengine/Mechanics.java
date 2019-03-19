@@ -64,6 +64,11 @@ public class Mechanics {
 				 
 		    System.out.println(piece);
 			ArrayList<String> piecePossibleLocations=piece.getPossibleLocations();
+			//if castles remove obstruction checks
+			if(endPos.substring(0,1).equals("c")) {
+				return parseAndMoveToLocation(piece,endPos.substring(1));
+			}
+			
 		    for(int j=0;j<piecePossibleLocations.size();j++) {
 			    if(piecePossibleLocations.get(j).equals(endPos)){
 				   return parseAndMoveToLocation(piece,endPos);
@@ -89,12 +94,8 @@ public class Mechanics {
 					if(((Pawn) piece).getUnmoved()==true && (Math.abs(oldYPos-Integer.parseInt(endPos.substring(2)))==2)) {
 						((Pawn) piece).setEnPassant(true);
 					}
-					else {
-						((Pawn) piece).setEnPassant(false);
-					}
-					((Pawn) piece).setMoved();
-					
 				}
+				piece.setMoved();
 				isWhiteToMove=!isWhiteToMove;
 				return true;
 			}
@@ -120,8 +121,20 @@ public class Mechanics {
 					if(((Pawn) piece).getUnmoved()==true && (Math.abs(oldYPos-Integer.parseInt(endPos.substring(1)))==2)) {
 						((Pawn) piece).setEnPassant(true);
 					}
-					((Pawn) piece).setMoved();
 				}
+				if(piece.getName().equals("King")) {
+					//hacky approach to check if a two move has been made
+					if(piece.getUnmoved()==true && (Math.abs(oldXPos-Integer.parseInt(endPos.substring(0,1)))==2)) {
+						if(endPos.substring(0,1).contentEquals("6") ) {
+							makeMove("7"+ oldYPos,"c5"+oldYPos);
+						}
+						if(endPos.substring(0,1).contentEquals("1") ) {
+							makeMove("0"+ oldYPos,"c3"+oldYPos);
+						}
+						isWhiteToMove=!isWhiteToMove;
+					}
+				}
+				piece.setMoved();
 				isWhiteToMove=!isWhiteToMove;
 				return true;
 			}else {
